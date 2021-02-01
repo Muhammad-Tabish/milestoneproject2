@@ -6,7 +6,13 @@ def add_book(name, author):
 def get_all_books():
     return books
 
-def mark_book_read(book_name):
+def mark_book_read(name):
     for book in books:
-        if book ['name'] == book_name:
-            book['read'] == True
+        if book['name'] == name:
+            book['read'] = True
+
+
+def delete_book(name):
+    global books
+    books = [book for book in books if book ['name'] != name]
+
