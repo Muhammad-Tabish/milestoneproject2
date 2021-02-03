@@ -11,6 +11,7 @@ user_choice = """
 your choice: """
 
 def menu ():
+    database.create_table()
     user_input = input(user_choice)
     while user_input != 'q':
         if user_input == 'a':
@@ -36,7 +37,7 @@ def prompt_add_book():
 def list_books():
     books = database.get_all_books()
     for book in books:
-        read = 'yes' if book['read'] else 'no'
+        read = 'yes' if book['read'] == '1' else 'no'
         print(f"{book ['name']} by {book['author']}, read: {read}")
 def prompt_read_book():
     name = input('Enter the book name you just finished reading: ')
