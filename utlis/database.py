@@ -1,4 +1,4 @@
-import json
+import sqlite3
 
 """
 [
@@ -13,8 +13,13 @@ import json
 books_file = 'books.json'
 
 def create_book_table():
-    with open(books_file, 'w') as file:
-        json.dump([], file)
+        connection = sqlite3.connect('data.db')
+        cursor = connection.cursor()
+
+        cursor.execute('CREATE TABLE books(name text primary key, author text, read integer)')
+        connection.commit()
+
+        connection.close()
 
 def add_book(name, author):
    books = get_all_books()
