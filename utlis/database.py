@@ -1,4 +1,5 @@
-from database_connection import Databaseconnection
+from typing import List, Dict, Union
+from .database_connection import Databaseconnection
 
 """
 [
@@ -10,22 +11,22 @@ from database_connection import Databaseconnection
 ]
 """
 
-books_file = 'books.json'
 
-def create_book_table():
+Book = Dict[str, Union[str, int]]
+def create_book_table() -> None:
         with Databaseconnection ('data.db') as connection:
           cursor = connection.cursor()
 
           cursor.execute('CREATE TABLE IF NOT EXISTS books (name text primary key, author text, read integer)')
 
 
-def add_book(name, author):
+def add_book(name: str, author) -> None:
     with Databaseconnection ('data.db') as connection:
        cursor = connection.cursor()
 
        cursor.execute('INSERT INTO books VALUES (?, ?, 0)', (name,author))
 
-def get_all_books():
+def get_all_books() -> List[Book]:
     with Databaseconnection ('data.db') as connection:
       cursor = connection.cursor()
       cursor.execute('SELECT * FROM books')
@@ -33,7 +34,7 @@ def get_all_books():
 
     return books
 
-def mark_book_read(name):
+def mark_book_read(name : str) -> None:
    with Databaseconnection ('data.db') as connection:
       cursor = connection.cursor()
 
@@ -44,10 +45,10 @@ def mark_book_read(name):
 
 
 
-def delete_book(name):
+def delete_book(name : str)-> None:
     with Databaseconnection ('data.db') as connection:
        cursor = connection.cursor()
-       cursor.execute('DELETE FROM books WHERE name=?', {name})
+       cursor.execute('DELETE FROM books WHERE name=?', (name,))
 
 
 
